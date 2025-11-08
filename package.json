@@ -12,6 +12,10 @@
     "dev:web": "npm run dev --workspace=packages/web",
     "dev:mobile": "npm run dev --workspace=packages/mobile",
 
+    "dev:mac": "bash scripts/dev-mac.sh",
+    "dev:quick": "bash scripts/quick-start.sh",
+    "dev:stop": "bash scripts/stop-all.sh",
+
     "build": "npm run build --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
@@ -24,6 +28,11 @@
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
     "docker:reset": "docker-compose down -v && docker-compose up -d",
+
+    "supabase:start": "cd packages/database && npx supabase start",
+    "supabase:stop": "cd packages/database && npx supabase stop",
+    "supabase:status": "cd packages/database && npx supabase status",
+    "supabase:studio": "cd packages/database && npx supabase studio",
 
     "setup": "bash scripts/setup-dev.sh",
     "check:integrations": "bash scripts/check-integrations.sh"
