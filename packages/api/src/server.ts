@@ -15,6 +15,8 @@ import airportRoutes from './routes/supabaseAirports';
 import wheelRoutes from './routes/wheel';
 import bookingRoutes from './routes/bookings';
 import alertRoutes from './routes/alerts';
+import accommodationRoutes from './routes/accommodations';
+import adminRoutes from './routes/admin';
 
 // Services
 import { schedulerService } from './services/scheduler.service';
@@ -56,6 +58,8 @@ app.use('/api/airports', airportRoutes);
 app.use('/api/wheel', wheelRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/alerts', alertRoutes);
+app.use('/api/accommodations', accommodationRoutes);
+app.use('/api/admin', adminRoutes);
 
 // 404 handler
 app.use((req, res) => {
