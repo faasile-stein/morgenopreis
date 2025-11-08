@@ -3,6 +3,7 @@ import { supabase } from '../config/supabase';
 import { getRedisClient } from '../config/redis';
 import { logger } from '@traveltomorrow/shared';
 import { addDays, addMonths, format } from 'date-fns';
+import { recordOffersInHistory } from './priceHistory.service';
 
 export interface OfferSearchParams {
   originIataCode: string;
@@ -74,6 +75,9 @@ export async function searchOffers(params: OfferSearchParams): Promise<any[]> {
 
     // Cache offers in database and Redis
     await cacheOffers(offers, params.originIataCode, params.destinationIataCode);
+
+    // Record price history for analytics and alerts
+    await recordOffersInHistory(offers, params.originIataCode, params.destinationIataCode);
 
     return offers;
   } catch (error: any) {

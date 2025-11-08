@@ -14,6 +14,10 @@ import authRoutes from './routes/supabaseAuth';
 import airportRoutes from './routes/supabaseAirports';
 import wheelRoutes from './routes/wheel';
 import bookingRoutes from './routes/bookings';
+import alertRoutes from './routes/alerts';
+
+// Services
+import { schedulerService } from './services/scheduler.service';
 
 const app = express();
 
@@ -51,6 +55,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/airports', airportRoutes);
 app.use('/api/wheel', wheelRoutes);
 app.use('/api/bookings', bookingRoutes);
+app.use('/api/alerts', alertRoutes);
 
 // 404 handler
 app.use((req, res) => {
@@ -68,6 +73,9 @@ async function startServer() {
     await connectRedis();
     logger.info('Redis connected');
 
+    // Start background scheduler for price monitoring
+    schedulerService.start();
+
     // Start server
     app.listen(PORT, () => {
       logger.info(`🚀 API server running on port ${PORT}`);
@@ -78,6 +86,19 @@ async function startServer() {
     process.exit(1);
   }
 }
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+  logger.info('SIGTERM received, shutting down gracefully...');
+  schedulerService.stop();
+  process.exit(0);
+});
+
+process.on('SIGINT', () => {
+  logger.info('SIGINT received, shutting down gracefully...');
+  schedulerService.stop();
+  process.exit(0);
+});
 
 startServer();
 
