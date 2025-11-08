@@ -1,0 +1,580 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/client"
+}
+
+// ============================================
+// USER & AUTHENTICATION
+// ============================================
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  passwordHash  String?
+  emailVerified Boolean   @default(false)
+  firstName     String?
+  lastName      String?
+  phone         String?
+
+  // OAuth fields
+  provider      String?   // google, facebook, apple
+  providerId    String?
+
+  // Preferences
+  homeAirportId String?
+  homeAirport   Airport?  @relation(fields: [homeAirportId], references: [iataCode])
+  currency      String    @default("EUR")
+  locale        String    @default("en")
+
+  // Gamification
+  loyaltyPoints Int       @default(0)
+  badges        Badge[]
+
+  role          UserRole  @default(USER)
+  status        UserStatus @default(ACTIVE)
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  lastLoginAt   DateTime?
+
+  // Relations
+  bookings      Booking[]
+  alerts        PriceAlert[]
+  sessions      Session[]
+  preferences   UserPreference[]
+  wheelSpins    WheelSpin[]
+
+  @@index([email])
+  @@index([homeAirportId])
+}
+
+enum UserRole {
+  USER
+  EDITOR
+  PRICING_MANAGER
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  DELETED
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token        String   @unique
+  refreshToken String?  @unique
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+  ipAddress    String?
+  userAgent    String?
+
+  @@index([userId])
+  @@index([token])
+}
+
+model UserPreference {
+  id        String  @id @default(cuid())
+  userId    String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  key       String  // e.g., "maxFlightDuration", "preferredTripType"
+  value     String
+
+  @@unique([userId, key])
+  @@index([userId])
+}
+
+// ============================================
+// AIRPORTS & LOCATIONS
+// ============================================
+
+model Airport {
+  iataCode    String   @id // BRU, CDG, AMS
+  icaoCode    String?
+  name        String
+  city        String
+  country     String
+  countryCode String   // BE, FR, NL
+  latitude    Float
+  longitude   Float
+  timezone    String
+
+  // Features
+  isActive    Boolean  @default(true)
+  isPopular   Boolean  @default(false)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  users               User[]
+  departureOffers     Offer[]         @relation("DepartureAirport")
+  arrivalOffers       Offer[]         @relation("ArrivalAirport")
+  destinations        Destination[]   @relation("DestinationAirport")
+  nearbyDestinations  Destination[]   @relation("NearbyAirports")
+
+  @@index([countryCode])
+  @@index([isPopular, isActive])
+  @@index([latitude, longitude])
+}
+
+// ============================================
+// DESTINATIONS
+// ============================================
+
+model Destination {
+  id              String   @id @default(cuid())
+
+  // Basic info
+  city            String
+  country         String
+  countryCode     String
+  airportId       String
+  airport         Airport  @relation("DestinationAirport", fields: [airportId], references: [iataCode])
+
+  // Editorial content
+  slug            String   @unique
+  title           String
+  shortDescription String?
+  longDescription  String?  @db.Text
+  itineraryJson    Json?    // Structured itinerary data
+
+  // Media
+  heroImageUrl     String?
+  galleryImages    String[] // Array of image URLs
+  videoUrl         String?
+
+  // Pricing & features
+  basePriceEur     Int?     // Base price in EUR cents
+  minDurationDays  Int      @default(2)
+  maxDurationDays  Int      @default(4)
+
+  // Classification
+  tripTypes        String[] // ["romantic", "outdoors", "city-break", "beach"]
+  tags             String[] // ["weekend", "culture", "nightlife"]
+  seasonality      String[] // ["spring", "summer", "fall", "winter"]
+
+  // Admin controls
+  isFeatured       Boolean  @default(false)
+  isPublished      Boolean  @default(false)
+  publishedAt      DateTime?
+  priority         Int      @default(50) // For wheel weighting
+
+  // SEO
+  metaTitle        String?
+  metaDescription  String?
+  canonicalUrl     String?
+
+  // Affiliate links
+  bookingCityId    String?  // Booking.com city ID
+
+  // Analytics
+  viewCount        Int      @default(0)
+  bookingCount     Int      @default(0)
+  wheelWinCount    Int      @default(0)
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  createdBy        String?
+  updatedBy        String?
+
+  // Relations
+  nearbyAirports   Airport[] @relation("NearbyAirports")
+  offers           Offer[]
+  priceHistory     PriceHistory[]
+  wheelResults     WheelSpin[]
+  bankHolidayPages BankHolidayPage[]
+
+  @@index([slug])
+  @@index([airportId])
+  @@index([isFeatured, isPublished])
+  @@index([countryCode])
+}
+
+// ============================================
+// OFFERS & PRICING
+// ============================================
+
+model Offer {
+  id                String   @id @default(cuid())
+
+  // Duffel data
+  duffelOfferId     String   @unique
+  duffelOfferData   Json     // Full Duffel offer response
+
+  // Route info
+  departureAirportId String
+  departureAirport   Airport  @relation("DepartureAirport", fields: [departureAirportId], references: [iataCode])
+  arrivalAirportId   String
+  arrivalAirport     Airport  @relation("ArrivalAirport", fields: [arrivalAirportId], references: [iataCode])
+
+  destinationId      String?
+  destination        Destination? @relation(fields: [destinationId], references: [id])
+
+  // Flight details
+  outboundDate       DateTime
+  returnDate         DateTime?
+  isRoundTrip        Boolean
+  cabinClass         String   // economy, premium_economy, business, first
+
+  // Pricing
+  currency           String
+  totalAmount        Int      // In cents
+  baseFare           Int      // In cents
+  taxesAmount        Int      // In cents
+
+  // Passengers
+  adultCount         Int      @default(1)
+  childCount         Int      @default(0)
+  infantCount        Int      @default(0)
+
+  // Fare conditions
+  isRefundable       Boolean  @default(false)
+  baggageAllowance   Json?
+  fareConditions     Json?
+
+  // Caching
+  cachedAt           DateTime @default(now())
+  expiresAt          DateTime
+
+  // Price scoring
+  priceScore         Int?     // 0-100, higher is better
+  priceBadge         PriceBadge? // GOOD, FAIR, POOR
+
+  // Relations
+  bookings           Booking[]
+
+  @@index([duffelOfferId])
+  @@index([departureAirportId, arrivalAirportId, outboundDate])
+  @@index([destinationId])
+  @@index([expiresAt])
+  @@index([priceScore])
+}
+
+enum PriceBadge {
+  GOOD
+  FAIR
+  POOR
+}
+
+model PriceHistory {
+  id             String      @id @default(cuid())
+
+  routeKey       String      // e.g., "BRU-CDG"
+  destinationId  String?
+  destination    Destination? @relation(fields: [destinationId], references: [id])
+
+  travelDate     DateTime
+  price          Int         // In cents
+  currency       String
+  source         String      // duffel, manual, competitor
+
+  createdAt      DateTime    @default(now())
+
+  @@index([routeKey, travelDate])
+  @@index([destinationId, travelDate])
+  @@index([createdAt])
+}
+
+// ============================================
+// BOOKINGS
+// ============================================
+
+model Booking {
+  id                String   @id @default(cuid())
+
+  // User
+  userId            String
+  user              User     @relation(fields: [userId], references: [id])
+
+  // Offer
+  offerId           String
+  offer             Offer    @relation(fields: [offerId], references: [id])
+
+  // Duffel order
+  duffelOrderId     String   @unique
+  duffelOrderData   Json
+
+  // Passengers
+  passengers        Json     // Array of passenger objects
+
+  // Payment
+  paymentIntentId   String?
+  paymentStatus     PaymentStatus @default(PENDING)
+  totalPaid         Int      // In cents
+  currency          String
+
+  // Status
+  status            BookingStatus @default(PENDING)
+  ticketingStatus   TicketingStatus @default(NOT_ISSUED)
+
+  // Tickets
+  tickets           Json?    // Duffel ticket data
+
+  // Extras
+  hasLuggage        Boolean  @default(false)
+  hasSeatSelection  Boolean  @default(false)
+  extrasData        Json?
+
+  // Metadata
+  bookingReference  String?  // PNR
+  confirmationEmail String?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  confirmedAt       DateTime?
+  cancelledAt       DateTime?
+
+  @@index([userId])
+  @@index([duffelOrderId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+enum PaymentStatus {
+  PENDING
+  AUTHORIZED
+  CAPTURED
+  FAILED
+  REFUNDED
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  REFUNDED
+}
+
+enum TicketingStatus {
+  NOT_ISSUED
+  ISSUING
+  ISSUED
+  FAILED
+}
+
+// ============================================
+// PRICE ALERTS
+// ============================================
+
+model PriceAlert {
+  id              String   @id @default(cuid())
+
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Alert target
+  routeKey        String?  // e.g., "BRU-BCN"
+  destinationId   String?
+
+  // Criteria
+  departureDate   DateTime?
+  returnDate      DateTime?
+  thresholdPrice  Int?     // In cents - trigger if below
+  thresholdPercent Int?    // Trigger if % drop
+
+  // Status
+  isActive        Boolean  @default(true)
+  lastNotifiedAt  DateTime?
+  notificationCount Int    @default(0)
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([userId, isActive])
+  @@index([routeKey])
+  @@index([destinationId])
+}
+
+// ============================================
+// WHEEL & GAMIFICATION
+// ============================================
+
+model WheelSpin {
+  id              String      @id @default(cuid())
+
+  userId          String?
+  user            User?       @relation(fields: [userId], references: [id])
+
+  // Input
+  departureAirportId String
+  preferences     Json?       // User preferences for this spin
+
+  // Result
+  resultDestinationId String?
+  resultDestination   Destination? @relation(fields: [resultDestinationId], references: [id])
+  offersShown     Json        // Array of offer summaries shown
+
+  // Actions
+  didClickOffer   Boolean     @default(false)
+  didBook         Boolean     @default(false)
+
+  // Metadata
+  sessionId       String?
+  ipAddress       String?
+
+  createdAt       DateTime    @default(now())
+
+  @@index([userId])
+  @@index([resultDestinationId])
+  @@index([createdAt])
+}
+
+model Badge {
+  id          String   @id @default(cuid())
+  code        String   @unique
+  name        String
+  description String
+  iconUrl     String?
+
+  users       User[]
+
+  createdAt   DateTime @default(now())
+}
+
+// ============================================
+// BANK HOLIDAYS & EDITORIAL
+// ============================================
+
+model BankHolidayPage {
+  id              String        @id @default(cuid())
+
+  slug            String        @unique
+  countryCode     String
+
+  // Holiday info
+  holidayName     String
+  holidayDate     DateTime
+  year            Int
+
+  // Content
+  title           String
+  content         String        @db.Text
+  metaDescription String?
+
+  // Featured destinations
+  destinations    Destination[]
+
+  isPublished     Boolean       @default(false)
+  publishedAt     DateTime?
+
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@index([slug])
+  @@index([countryCode, year])
+}
+
+// ============================================
+// AFFILIATE TRACKING
+// ============================================
+
+model AffiliateClick {
+  id              String   @id @default(cuid())
+
+  userId          String?
+  destinationId   String?
+
+  partner         String   // booking, expedia, etc.
+  affiliateId     String
+  clickUrl        String   @db.Text
+
+  // Tracking
+  sessionId       String?
+  ipAddress       String?
+  userAgent       String?
+  referrer        String?
+
+  createdAt       DateTime @default(now())
+
+  @@index([partner, createdAt])
+  @@index([destinationId])
+}
+
+model AffiliateConversion {
+  id              String   @id @default(cuid())
+
+  clickId         String?
+  partner         String
+
+  bookingValue    Int      // In cents
+  commission      Int      // In cents
+  currency        String
+
+  conversionDate  DateTime
+  createdAt       DateTime @default(now())
+
+  @@index([partner, conversionDate])
+}
+
+// ============================================
+// ADMIN & AUDIT
+// ============================================
+
+model AdminAction {
+  id          String   @id @default(cuid())
+
+  userId      String
+  action      String   // e.g., "destination.update", "price.override"
+  entityType  String   // e.g., "destination", "user", "booking"
+  entityId    String
+
+  changeData  Json?    // Old vs new values
+
+  ipAddress   String?
+  userAgent   String?
+
+  createdAt   DateTime @default(now())
+
+  @@index([userId, createdAt])
+  @@index([entityType, entityId])
+}
+
+// ============================================
+// EMAIL CAMPAIGNS
+// ============================================
+
+model EmailCampaign {
+  id              String   @id @default(cuid())
+
+  name            String
+  subject         String
+  content         String   @db.Text
+
+  // Targeting
+  targetSegment   String?  // e.g., "all", "price-alert-subscribers"
+  targetCountry   String?
+
+  // Scheduling
+  status          CampaignStatus @default(DRAFT)
+  scheduledAt     DateTime?
+  sentAt          DateTime?
+
+  // Stats
+  recipientCount  Int      @default(0)
+  openCount       Int      @default(0)
+  clickCount      Int      @default(0)
+  conversionCount Int      @default(0)
+
+  createdAt       DateTime @default(now())
+  createdBy       String?
+
+  @@index([status, scheduledAt])
+}
+
+enum CampaignStatus {
+  DRAFT
+  SCHEDULED
+  SENDING
+  SENT
+  CANCELLED
+}

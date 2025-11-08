@@ -5,12 +5,42 @@
   "description": "TravelTomorrow API server",
   "main": "dist/server.js",
   "scripts": {
-    "dev": "echo 'API dev server - to be implemented in Stage 1'",
-    "build": "echo 'API build - to be implemented in Stage 1'",
-    "test": "echo 'API tests - to be implemented in Stage 1'",
-    "lint": "echo 'API lint - to be implemented in Stage 1'",
-    "type-check": "echo 'API type-check - to be implemented in Stage 1'"
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "lint": "eslint src --ext .ts",
+    "type-check": "tsc --noEmit"
   },
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {
+    "@traveltomorrow/shared": "^1.0.0",
+    "@traveltomorrow/database": "^1.0.0",
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "compression": "^1.7.4",
+    "bcrypt": "^5.1.1",
+    "jsonwebtoken": "^9.0.2",
+    "express-validator": "^7.0.1",
+    "express-rate-limit": "^7.1.5",
+    "redis": "^4.6.12",
+    "dotenv": "^16.3.1",
+    "axios": "^1.6.5"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/cors": "^2.8.17",
+    "@types/compression": "^1.7.5",
+    "@types/bcrypt": "^5.0.2",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/node": "^20.11.0",
+    "typescript": "^5.3.3",
+    "tsx": "^4.7.0",
+    "jest": "^29.7.0",
+    "@types/jest": "^29.5.11",
+    "ts-jest": "^29.1.1",
+    "supertest": "^6.3.4",
+    "@types/supertest": "^6.0.2"
+  }
 }

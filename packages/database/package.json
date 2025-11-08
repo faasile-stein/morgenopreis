@@ -4,12 +4,19 @@
   "private": true,
   "description": "Database schema and migrations",
   "scripts": {
-    "migrate:dev": "echo 'Migrations - to be implemented in Stage 1'",
-    "migrate:prod": "echo 'Production migrations - to be implemented in Stage 1'",
-    "migrate:test": "echo 'Test migrations - to be implemented in Stage 1'",
-    "seed": "echo 'Database seed - to be implemented in Stage 1'",
-    "studio": "echo 'Prisma Studio - to be implemented in Stage 1'"
+    "migrate:dev": "prisma migrate dev",
+    "migrate:prod": "prisma migrate deploy",
+    "migrate:test": "prisma migrate deploy",
+    "seed": "tsx src/seed.ts",
+    "studio": "prisma studio",
+    "generate": "prisma generate"
   },
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {
+    "@prisma/client": "^5.9.0"
+  },
+  "devDependencies": {
+    "prisma": "^5.9.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  }
 }
