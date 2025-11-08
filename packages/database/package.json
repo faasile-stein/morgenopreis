@@ -2,21 +2,21 @@
   "name": "@traveltomorrow/database",
   "version": "1.0.0",
   "private": true,
-  "description": "Database schema and migrations",
+  "description": "Database schema and migrations (Supabase)",
   "scripts": {
-    "migrate:dev": "prisma migrate dev",
-    "migrate:prod": "prisma migrate deploy",
-    "migrate:test": "prisma migrate deploy",
-    "seed": "tsx src/seed.ts",
-    "studio": "prisma studio",
-    "generate": "prisma generate"
+    "supabase:start": "supabase start",
+    "supabase:stop": "supabase stop",
+    "supabase:status": "supabase status",
+    "migrate:dev": "supabase db push",
+    "migrate:prod": "supabase db push --linked",
+    "reset": "supabase db reset",
+    "seed": "supabase db reset --db-url $DATABASE_URL",
+    "types": "supabase gen types typescript --local > ../shared/src/types/database.types.ts",
+    "link": "supabase link",
+    "help": "supabase --help"
   },
-  "dependencies": {
-    "@prisma/client": "^5.9.0"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "prisma": "^5.9.0",
-    "tsx": "^4.7.0",
-    "typescript": "^5.3.3"
+    "supabase": "^1.142.2"
   }
 }
