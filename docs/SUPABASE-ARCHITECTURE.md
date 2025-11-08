@@ -50,13 +50,13 @@ TravelTomorrow uses **Supabase** as the primary backend infrastructure, providin
                   │
                   ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                    Drupal CMS (SEO)                          │
+│                    Laravel CMS (SEO)                         │
 ├─────────────────────────────────────────────────────────────┤
 │  - Destination editorial content                             │
 │  - Bank holiday pages                                        │
 │  - Blog posts & guides                                       │
 │  - JSON-LD / Schema.org markup                               │
-│  - Separate PostgreSQL DB or connects to Supabase           │
+│  - Connects to Supabase via PostgreSQL driver               │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -82,11 +82,12 @@ TravelTomorrow uses **Supabase** as the primary backend infrastructure, providin
   - Booking orchestration
   - Background jobs (cron)
 
-- **Drupal CMS** - For SEO content:
+- **Laravel CMS** - For SEO content:
   - Editorial destination pages
   - Bank holiday content
   - Blog posts
   - Rich media management
+  - Filament admin panel
 
 ## Database Access Patterns
 
@@ -254,13 +255,13 @@ supabase db push
 - **Vercel** - Next.js web app deployment
 - **Expo EAS** - Mobile app hosting
 - **Custom API** - Deploy to Railway/Render/AWS
-- **Drupal** - Separate hosting (Pantheon/Acquia)
+- **Laravel** - Deploy to Laravel Forge/Vapor/AWS
 
 ### Development
 - **Local Supabase** - Docker containers (DB, Auth, Storage)
 - **Local Next.js** - `npm run dev`
 - **Local API** - Express on port 3001
-- **Local Drupal** - Docker on port 8080
+- **Local Laravel** - `php artisan serve` on port 8000
 
 ## Migration from Current Setup
 
@@ -273,7 +274,7 @@ supabase db push
 - ✅ Add Supabase SQL migrations
 - ✅ Keep Redis for API caching
 - ✅ Keep custom API for business logic
-- ✅ Keep Drupal for SEO
+- ✅ Use Laravel for SEO content management
 
 ### Migration Steps
 1. Convert Prisma schema → Supabase SQL migrations

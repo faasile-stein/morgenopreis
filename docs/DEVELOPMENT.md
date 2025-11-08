@@ -55,9 +55,9 @@ morgenopreis/
 │   ├── api/                 # Node.js/Express API server
 │   ├── web/                 # Next.js web application
 │   ├── mobile/              # React Native/Expo app
-│   ├── drupal/              # Drupal CMS
+│   ├── laravel/             # Laravel CMS for SEO content
 │   ├── shared/              # Shared TypeScript types & utilities
-│   └── database/            # Prisma schema & migrations
+│   └── database/            # Supabase migrations & types
 ├── infrastructure/          # Terraform & deployment configs
 ├── docs/                    # Documentation
 ├── scripts/                 # Utility scripts
@@ -139,7 +139,7 @@ We use Conventional Commits:
 - `ci`: CI/CD changes
 
 **Scopes:**
-- `api`, `web`, `mobile`, `drupal`, `shared`, `database`, `infra`, `ci`
+- `api`, `web`, `mobile`, `laravel`, `shared`, `database`, `infra`, `ci`
 
 **Examples:**
 ```bash
@@ -215,9 +215,10 @@ redis-cli -h localhost -p 6379
 
 All emails sent in development are caught by MailHog.
 
-### Drupal
-- **Port:** 8080
-- **URL:** http://localhost:8080
+### Laravel
+- **Port:** 8000
+- **URL:** http://localhost:8000
+- Start with: `cd packages/laravel && php artisan serve`
 
 ## Environment Variables
 
@@ -235,7 +236,7 @@ See `packages/web/.env.example` for all available variables.
 
 Key variables:
 - `NEXT_PUBLIC_API_URL` - API server URL
-- `NEXT_PUBLIC_DRUPAL_URL` - Drupal CMS URL
+- `NEXT_PUBLIC_LARAVEL_URL` - Laravel CMS URL
 
 ## Troubleshooting
 

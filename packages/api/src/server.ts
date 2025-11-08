@@ -9,9 +9,9 @@ import { rateLimiter } from './middleware/rateLimit';
 import { connectRedis } from './config/redis';
 
 // Routes
-import healthRoutes from './routes/health';
-import authRoutes from './routes/auth';
-import airportRoutes from './routes/airports';
+import healthRoutes from './routes/supabaseHealth';
+import authRoutes from './routes/supabaseAuth';
+import airportRoutes from './routes/supabaseAirports';
 
 const app = express();
 

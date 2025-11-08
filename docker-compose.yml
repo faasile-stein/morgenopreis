@@ -29,25 +29,27 @@ services:
     networks:
       - traveltomorrow
 
-  # Drupal CMS (optional - for SEO content in Stage 3)
-  # Uncomment when ready to use Drupal
-  # drupal:
-  #   build: ./packages/drupal
-  #   container_name: traveltomorrow-drupal
+  # Laravel CMS (optional - for SEO content in Stage 3)
+  # Uncomment when ready to use Laravel
+  # laravel:
+  #   build: ./packages/laravel
+  #   container_name: traveltomorrow-laravel
   #   environment:
-  #     # Can connect to Supabase or separate DB
-  #     DATABASE_URL: ${DRUPAL_DATABASE_URL}
+  #     DB_CONNECTION: pgsql
+  #     DB_HOST: ${SUPABASE_DB_HOST:-localhost}
+  #     DB_PORT: ${SUPABASE_DB_PORT:-54322}
+  #     DB_DATABASE: postgres
+  #     DB_USERNAME: postgres
+  #     DB_PASSWORD: ${SUPABASE_DB_PASSWORD}
   #   ports:
-  #     - "8080:80"
+  #     - "8000:8000"
   #   volumes:
-  #     - ./packages/drupal:/var/www/html
-  #     - drupal_files:/var/www/html/sites/default/files
+  #     - ./packages/laravel:/var/www/html
   #   networks:
   #     - traveltomorrow
 
 volumes:
   redis_data:
-  # drupal_files:  # Uncomment if using Drupal
 
 networks:
   traveltomorrow:
