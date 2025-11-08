@@ -1,0 +1,16 @@
+{
+  "name": "@traveltomorrow/mobile",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TravelTomorrow mobile application",
+  "main": "expo-router",
+  "scripts": {
+    "dev": "echo 'Mobile dev server - to be implemented in Stage 6'",
+    "start": "echo 'Mobile start - to be implemented in Stage 6'",
+    "test": "echo 'Mobile tests - to be implemented in Stage 6'",
+    "lint": "echo 'Mobile lint - to be implemented in Stage 6'",
+    "type-check": "echo 'Mobile type-check - to be implemented in Stage 6'"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

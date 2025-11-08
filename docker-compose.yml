@@ -1,0 +1,56 @@
+version: '3.9'
+
+# TravelTomorrow Docker Compose
+# Note: PostgreSQL is now handled by Supabase (local or cloud)
+# Run `cd packages/database && npm run supabase:start` to start local Supabase
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: traveltomorrow-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - traveltomorrow
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: traveltomorrow-mailhog
+    ports:
+      - "1025:1025"  # SMTP
+      - "8025:8025"  # Web UI
+    networks:
+      - traveltomorrow
+
+  # Laravel CMS (optional - for SEO content in Stage 3)
+  # Uncomment when ready to use Laravel
+  # laravel:
+  #   build: ./packages/laravel
+  #   container_name: traveltomorrow-laravel
+  #   environment:
+  #     DB_CONNECTION: pgsql
+  #     DB_HOST: ${SUPABASE_DB_HOST:-localhost}
+  #     DB_PORT: ${SUPABASE_DB_PORT:-54322}
+  #     DB_DATABASE: postgres
+  #     DB_USERNAME: postgres
+  #     DB_PASSWORD: ${SUPABASE_DB_PASSWORD}
+  #   ports:
+  #     - "8000:8000"
+  #   volumes:
+  #     - ./packages/laravel:/var/www/html
+  #   networks:
+  #     - traveltomorrow
+
+volumes:
+  redis_data:
+
+networks:
+  traveltomorrow:
+    driver: bridge

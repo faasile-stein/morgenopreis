@@ -1,0 +1,9 @@
+{
+  "name": "@traveltomorrow/drupal",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Drupal CMS for TravelTomorrow",
+  "scripts": {
+    "build": "echo 'Drupal build - to be implemented in Stage 3'"
+  }
+}

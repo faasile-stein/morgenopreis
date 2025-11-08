@@ -1,0 +1,15 @@
+{
+  "name": "@traveltomorrow/web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TravelTomorrow web application",
+  "scripts": {
+    "dev": "echo 'Web dev server - to be implemented in Stage 1'",
+    "build": "echo 'Web build - to be implemented in Stage 1'",
+    "test": "echo 'Web tests - to be implemented in Stage 1'",
+    "lint": "echo 'Web lint - to be implemented in Stage 1'",
+    "type-check": "echo 'Web type-check - to be implemented in Stage 1'"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
