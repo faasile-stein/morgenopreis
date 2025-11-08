@@ -1,0 +1,40 @@
+name: Web CI
+
+on:
+  push:
+    branches: [main, develop, 'claude/**']
+    paths:
+      - 'packages/web/**'
+      - 'packages/shared/**'
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npm run type-check --workspace=packages/web
+
+      - name: Lint
+        run: npm run lint --workspace=packages/web
+
+      - name: Build
+        run: npm run build --workspace=packages/web
+        env:
+          NEXT_PUBLIC_API_URL: https://api-staging.traveltomorrow.be
+
+      - name: Run tests
+        run: npm run test --workspace=packages/web

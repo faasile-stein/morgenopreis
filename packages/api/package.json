@@ -1,0 +1,16 @@
+{
+  "name": "@traveltomorrow/api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TravelTomorrow API server",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "echo 'API dev server - to be implemented in Stage 1'",
+    "build": "echo 'API build - to be implemented in Stage 1'",
+    "test": "echo 'API tests - to be implemented in Stage 1'",
+    "lint": "echo 'API lint - to be implemented in Stage 1'",
+    "type-check": "echo 'API type-check - to be implemented in Stage 1'"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

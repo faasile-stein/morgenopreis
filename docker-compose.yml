@@ -1,0 +1,73 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: traveltomorrow-postgres
+    environment:
+      POSTGRES_DB: traveltomorrow_dev
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: devpass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dev"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - traveltomorrow
+
+  redis:
+    image: redis:7-alpine
+    container_name: traveltomorrow-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - traveltomorrow
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: traveltomorrow-mailhog
+    ports:
+      - "1025:1025"  # SMTP
+      - "8025:8025"  # Web UI
+    networks:
+      - traveltomorrow
+
+  drupal:
+    build: ./packages/drupal
+    container_name: traveltomorrow-drupal
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_DB: traveltomorrow_drupal
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: devpass
+    ports:
+      - "8080:80"
+    volumes:
+      - ./packages/drupal:/var/www/html
+      - drupal_files:/var/www/html/sites/default/files
+    networks:
+      - traveltomorrow
+
+volumes:
+  postgres_data:
+  redis_data:
+  drupal_files:
+
+networks:
+  traveltomorrow:
+    driver: bridge
