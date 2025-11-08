@@ -12,6 +12,8 @@ import { connectRedis } from './config/redis';
 import healthRoutes from './routes/supabaseHealth';
 import authRoutes from './routes/supabaseAuth';
 import airportRoutes from './routes/supabaseAirports';
+import wheelRoutes from './routes/wheel';
+import bookingRoutes from './routes/bookings';
 
 const app = express();
 
@@ -47,6 +49,8 @@ app.use((req, res, next) => {
 app.use('/health', healthRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/airports', airportRoutes);
+app.use('/api/wheel', wheelRoutes);
+app.use('/api/bookings', bookingRoutes);
 
 // 404 handler
 app.use((req, res) => {
