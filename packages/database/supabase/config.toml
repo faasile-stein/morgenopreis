@@ -48,8 +48,7 @@ enabled = false
 client_id = ""
 secret = ""
 
-[edge_functions]
-enabled = true
-
+# Edge Functions configuration has been moved to a separate section
+# See: https://supabase.com/docs/guides/functions
 # [functions."send-price-alert"]
 # verify_jwt = true
