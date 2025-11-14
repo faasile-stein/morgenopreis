@@ -2,14 +2,42 @@
   "name": "@traveltomorrow/web",
   "version": "1.0.0",
   "private": true,
-  "description": "TravelTomorrow web application",
+  "description": "TravelTomorrow Next.js web application",
   "scripts": {
-    "dev": "echo 'Web dev server - to be implemented in Stage 1'",
-    "build": "echo 'Web build - to be implemented in Stage 1'",
-    "test": "echo 'Web tests - to be implemented in Stage 1'",
-    "lint": "echo 'Web lint - to be implemented in Stage 1'",
-    "type-check": "echo 'Web type-check - to be implemented in Stage 1'"
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {
+    "@traveltomorrow/shared": "^1.0.0",
+    "@supabase/supabase-js": "^2.39.3",
+    "@stripe/stripe-js": "^2.4.0",
+    "next": "^14.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "axios": "^1.6.5",
+    "date-fns": "^3.0.6",
+    "framer-motion": "^11.0.3",
+    "zustand": "^4.5.0",
+    "react-hot-toast": "^2.4.1",
+    "react-icons": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
+    "typescript": "^5.3.3",
+    "tailwindcss": "^3.4.1",
+    "postcss": "^8.4.33",
+    "autoprefixer": "^10.4.17",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "^14.1.0",
+    "jest": "^29.7.0",
+    "@testing-library/react": "^14.1.2",
+    "@testing-library/jest-dom": "^6.1.6"
+  }
 }
