@@ -1,6 +1,6 @@
 — Elevator / product overview
 
-MorgenOpreis.be / TravelTomorrow is an impulse-friendly travel product (web + app) where users can spin a wheel to instantly pick a next destination for a short trip. Bookings (flight search & ticketing) are handled with Duffel; accommodation links use Booking.com affiliate links or networks. The public website is SEO-first (Drupal) and shows curated destination pages (top weekend trips, bank-holiday pages per country, best prices now). Admins set destination prices, upload copy/pictures/itineraries, and control price-alert emails. Users can sign up for price alerts and see a dynamic “how good is this price now” rating.
+MorgenOpreis.be / TravelTomorrow is an impulse-friendly travel product (web + app) where users can spin a wheel to instantly pick a next destination for a short trip. Bookings (flight search & ticketing) are handled with Duffel; accommodation links use Booking.com affiliate links or networks. The public website is SEO-first (Laravel) and shows curated destination pages (top weekend trips, bank-holiday pages per country, best prices now). Admins set destination prices, upload copy/pictures/itineraries, and control price-alert emails. Users can sign up for price alerts and see a dynamic "how good is this price now" rating.
 
 Key third-party pieces:
 
@@ -12,8 +12,7 @@ Booking.com affiliate links / networks for accommodation and partner links.
 Booking.com
 +1
 
-Drupal site uses JSON-LD / Schema.org for SEO-rich pages. 
-Drupal.org
+Laravel site uses JSON-LD / Schema.org for SEO-rich pages.
 
 2 — Primary user stories
 
@@ -77,10 +76,9 @@ Users can subscribe to route/date alerts with notification thresholds (absolute 
 
 Admin can configure email templates and frequency; front-end shows current alert status.
 
-SEO-focused public site (Drupal)
+SEO-focused public site (Laravel)
 
-Destination pages (country/city/bank-holiday) with editorial copy, itinerary, images, structured data (JSON-LD Restaurant / TravelAction / Itinerary schema), and canonical URLs for crawlability. Use Drupal modules and JSON-LD best practices. 
-Drupal.org
+Destination pages (country/city/bank-holiday) with editorial copy, itinerary, images, structured data (JSON-LD Restaurant / TravelAction / Itinerary schema), and canonical URLs for crawlability. Use Laravel and JSON-LD best practices.
 
 Mobile app (Expo or native)
 
@@ -106,10 +104,9 @@ Duffel console: monitor offer volumes, error logs, and rebook/resend confirmatio
 
 Security: admin SSO + role-based access (editor, pricing-manager, ops, super-admin), admin activity logging.
 
-5 — SEO & Drupal implementation notes
+5 — SEO & Laravel implementation notes
 
-Use Drupal as CMS for public pages with a focus on server-side rendering and JSON-LD structured data (Schema.org) for Destination, Itinerary, Event (bank-holiday). This drives organic discovery and rich snippets. JSON-LD is preferred for Drupal structured data. 
-Drupal.org
+Use Laravel as CMS for public pages with a focus on server-side rendering and JSON-LD structured data (Schema.org) for Destination, Itinerary, Event (bank-holiday). This drives organic discovery and rich snippets. JSON-LD is preferred for Laravel structured data.
 
 Pre-generate & cache city/weekend landing pages; use dynamic incremental updates for new deals (sitemaps & on-demand ISR-like behavior).
 
@@ -175,7 +172,7 @@ affiliate_links (partner, template, partner_params)
 
 admin_actions (audit log)
 
-Store content & images in a CDN-backed storage (Drupal media library + storage adapter).
+Store content & images in a CDN-backed storage (Laravel media library + storage adapter).
 
 8 — API & flows (sequence summaries)
 
@@ -283,11 +280,11 @@ Track via GA4 + server-side event pipeline (Mixpanel/Segment + warehouse).
 
 Phase 0 — Foundations
 
-Provision infra (Drupal host, API server, database, storage, keys for Duffel & affiliate accounts).
+Provision infra (Laravel host, API server, database, storage, keys for Duffel & affiliate accounts).
 
 Implement airports dataset & geolocation API.
 
-Basic Next/Drupal public pages & editorial content model.
+Basic Next/Laravel public pages & editorial content model.
 
 Phase 1 — Wheel MVP + Duffel integration
 
@@ -300,8 +297,7 @@ Implement booking checkout via Duffel order creation. Basic confirmation emails.
 
 Phase 2 — SEO & editorial pages
 
-Expand Drupal pages: city/weekend pages, bank-holiday pages, JSON-LD/Schema markup, sitemaps. 
-Drupal.org
+Expand Laravel pages: city/weekend pages, bank-holiday pages, JSON-LD/Schema markup, sitemaps.
 
 Phase 3 — Alerts, price-history & “good price” engine
 
@@ -340,8 +336,7 @@ Example Duffel integration sample (Node.js) implementing offer_request → offer
 duffel.com
 +1
 
-Drupal content type definitions & JSON-LD templates for Destination / Itinerary / Event pages. 
-Drupal.org
+Laravel models & JSON-LD templates for Destination / Itinerary / Event pages.
 
 SQL schema for price_history + offers + alerts tables.
 

@@ -203,7 +203,7 @@ open http://127.0.0.1:64323
 1. ✅ Supabase setup complete
 2. 🔄 Migrate API endpoints to use Supabase client (as needed)
 3. 📋 Stage 2: Build Wheel MVP with Duffel integration
-4. 📋 Stage 3: Drupal SEO pages
+4. 📋 Stage 3: Laravel SEO pages
 5. 📋 Stage 4: Price alerts with real-time
 
 Happy coding! 🎉

@@ -22,13 +22,13 @@ morgenopreis/
 │       ├── api-ci.yml
 │       ├── web-ci.yml
 │       ├── mobile-ci.yml
-│       ├── drupal-ci.yml
+│       ├── laravel-ci.yml
 │       └── deploy.yml
 ├── packages/
 │   ├── api/                    # Node.js/Express API server
 │   ├── web/                    # Next.js web app (wheel UI)
 │   ├── mobile/                 # React Native/Expo app
-│   ├── drupal/                 # Drupal CMS
+│   ├── laravel/                # Laravel CMS
 │   ├── shared/                 # Shared TypeScript types & utilities
 │   └── database/               # Database migrations & schemas
 ├── infrastructure/
@@ -76,11 +76,11 @@ morgenopreis/
 - Expo Notifications
 
 **CMS:**
-- Drupal 10+
-- PHP 8.2+
+- Laravel 11+
+- PHP 8.3+
 - Composer
-- JSON-LD modules
-- Drupal Media Library
+- JSON-LD packages
+- Laravel Media Library
 
 **DevOps:**
 - Docker & Docker Compose
@@ -172,17 +172,17 @@ services:
       - "1025:1025"  # SMTP
       - "8025:8025"  # Web UI
 
-  drupal:
-    build: ./packages/drupal
+  laravel:
+    build: ./packages/laravel
     depends_on:
       postgres:
         condition: service_healthy
     environment:
-      DATABASE_URL: postgresql://dev:devpass@postgres:5432/traveltomorrow_drupal
+      DATABASE_URL: postgresql://dev:devpass@postgres:5432/traveltomorrow_laravel
     ports:
-      - "8080:80"
+      - "6800:8000"
     volumes:
-      - ./packages/drupal:/var/www/html
+      - ./packages/laravel:/var/www/html
 
 volumes:
   postgres_data:

@@ -6,7 +6,7 @@
 
 - ✅ Node.js v20.19.5 verified
 - ✅ NPM dependencies installed (1128 packages)
-- ✅ Workspace structure verified (api, web, mobile, database, drupal, laravel, shared)
+- ✅ Workspace structure verified (api, web, mobile, database, laravel, shared)
 
 ### 2. Environment Files Created
 
@@ -177,7 +177,7 @@ All services use ports starting with **6** for multi-environment support:
 - 6000: Web frontend
 - 6001: API server
 - 6025: MailHog UI
-- 6080: Drupal CMS (future)
+- 6800: Laravel CMS (future)
 - 6125: MailHog SMTP
 - 6379: Redis
 - 64321-64323: Supabase services
@@ -206,7 +206,7 @@ Before starting development, ensure:
 **Next Stages:**
 
 - Stage 2: Duffel flight booking integration
-- Stage 3: Drupal CMS for SEO content
+- Stage 3: Laravel CMS for SEO content
 - Stage 4: Price alerts and notifications
 - Stage 5: Booking.com hotel integration
 
