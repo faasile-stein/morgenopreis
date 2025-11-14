@@ -42,7 +42,7 @@ morgenopreis/
 │   ├── api/                 # Node.js/Express API server
 │   ├── web/                 # Next.js web application
 │   ├── mobile/              # React Native/Expo mobile app
-│   ├── drupal/              # Drupal 10 CMS
+│   ├── laravel/             # Laravel CMS
 │   ├── shared/              # Shared TypeScript types & utilities
 │   └── database/            # Prisma schema & migrations
 ├── infrastructure/          # Terraform & deployment configs
@@ -70,7 +70,7 @@ morgenopreis/
 - React Native
 
 **CMS:**
-- Drupal 10+
+- Laravel 11+
 
 **Integrations:**
 - Duffel API (flights)
@@ -116,7 +116,7 @@ The project is being developed in phases:
 - ✅ **Stage 0: Project Setup** - Monorepo structure, Docker, CI/CD (COMPLETED)
 - 🔄 **Stage 1: Foundations** - Database schema, API, authentication (IN PROGRESS)
 - 📋 **Stage 2: Wheel MVP** - Spin wheel UI, Duffel integration
-- 📋 **Stage 3: SEO & Editorial** - Drupal pages, JSON-LD
+- 📋 **Stage 3: SEO & Editorial** - Laravel pages, JSON-LD
 - 📋 **Stage 4: Price Alerts** - Alert system, email campaigns
 - 📋 **Stage 5: Affiliates** - Booking.com integration
 - 📋 **Stage 6: Mobile App** - React Native app
@@ -150,7 +150,7 @@ When you run `npm run docker:up`, the following services start:
 - **PostgreSQL** - Port 5432 (Database)
 - **Redis** - Port 6379 (Caching)
 - **MailHog** - Port 8025 (Email testing UI)
-- **Drupal** - Port 8080 (CMS - when configured)
+- **Laravel** - Port 6800 (CMS - when configured)
 
 ## Environment Variables
 
