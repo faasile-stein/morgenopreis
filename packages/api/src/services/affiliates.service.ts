@@ -1,4 +1,5 @@
 import { logger } from '@traveltomorrow/shared';
+import crypto from 'crypto';
 
 export interface AccommodationSearchParams {
   destinationCity: string;
@@ -115,10 +116,12 @@ export async function trackAffiliateClick(
 }
 
 /**
- * Generate session ID for tracking
+ * Generate cryptographically secure session ID for tracking
  */
 function generateSessionId(): string {
-  return `tt-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  const randomBytes = crypto.randomBytes(16).toString('hex');
+  const timestamp = Date.now();
+  return `tt-${timestamp}-${randomBytes}`;
 }
 
 /**

@@ -3,6 +3,8 @@ import { body, validationResult } from 'express-validator';
 import { spinWheel } from '../services/wheel.service';
 import { getCachedOffer } from '../services/offers.service';
 import { optionalAuth } from '../middleware/supabaseAuth';
+import { expensiveOperationLimiter } from '../middleware/rateLimit';
+import { sanitizeString, isValidIATACode } from '../utils/validation';
 import { logger } from '@traveltomorrow/shared';
 
 const router = Router();
@@ -19,6 +21,7 @@ const router = Router();
  */
 router.post(
   '/spin',
+  expensiveOperationLimiter, // Rate limit expensive wheel spins
   optionalAuth, // Allow both authenticated and anonymous users
   [
     body('lat').optional().isFloat({ min: -90, max: 90 }),
@@ -33,8 +36,19 @@ router.post(
         return res.status(400).json({ errors: errors.array() });
       }
 
-      const { lat, lng, homeAirportIata, preferences } = req.body;
+      let { lat, lng, homeAirportIata, preferences } = req.body;
       const userId = (req as any).user?.id;
+
+      // Additional validation and sanitization
+      if (homeAirportIata) {
+        homeAirportIata = homeAirportIata.toUpperCase();
+        if (!isValidIATACode(homeAirportIata)) {
+          return res.status(400).json({
+            success: false,
+            error: 'Invalid airport IATA code',
+          });
+        }
+      }
 
       logger.info('Wheel spin requested', {
         userId,
