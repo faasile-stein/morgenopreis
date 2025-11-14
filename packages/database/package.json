@@ -4,16 +4,16 @@
   "private": true,
   "description": "Database schema and migrations (Supabase)",
   "scripts": {
-    "supabase:start": "supabase start",
-    "supabase:stop": "supabase stop",
-    "supabase:status": "supabase status",
-    "migrate:dev": "supabase db push",
-    "migrate:prod": "supabase db push --linked",
-    "reset": "supabase db reset",
-    "seed": "supabase db reset --db-url $DATABASE_URL",
-    "types": "supabase gen types typescript --local > ../shared/src/types/database.types.ts",
-    "link": "supabase link",
-    "help": "supabase --help"
+    "supabase:start": "npx supabase start",
+    "supabase:stop": "npx supabase stop",
+    "supabase:status": "npx supabase status",
+    "migrate:dev": "npx supabase db push --local",
+    "migrate:prod": "npx supabase db push --linked",
+    "reset": "npx supabase db reset",
+    "seed": "npx supabase db reset --db-url $DATABASE_URL",
+    "types": "npx supabase gen types typescript --local > ../shared/src/types/database.types.ts",
+    "link": "npx supabase link",
+    "help": "npx supabase --help"
   },
   "dependencies": {},
   "devDependencies": {
