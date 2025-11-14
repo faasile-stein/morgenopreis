@@ -196,7 +196,7 @@ volumes:
 # Server
 NODE_ENV=development
 PORT=3001
-API_URL=http://localhost:3001
+API_URL=http://localhost:6001
 
 # Database
 DATABASE_URL=postgresql://dev:devpass@localhost:5432/traveltomorrow_dev
@@ -235,8 +235,8 @@ LOG_LEVEL=debug
 
 **packages/web/.env.example:**
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:3001
-NEXT_PUBLIC_DRUPAL_URL=http://localhost:8080
+NEXT_PUBLIC_API_URL=http://localhost:6001
+NEXT_PUBLIC_DRUPAL_URL=http://localhost:6080
 NEXT_PUBLIC_GOOGLE_MAPS_KEY=
 NEXT_PUBLIC_GA_TRACKING_ID=
 ```
@@ -433,7 +433,7 @@ jobs:
         uses: treosh/lighthouse-ci-action@v10
         with:
           urls: |
-            http://localhost:3000
+            http://localhost:6000
           budgetPath: ./packages/web/lighthouse-budget.json
           uploadArtifacts: true
 ```

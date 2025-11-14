@@ -29,18 +29,18 @@ npm run supabase:start
 ```
 
 This starts local Docker containers:
-- PostgreSQL (port 54322)
-- PostgREST API (port 54321)
+- PostgreSQL (port 64322)
+- PostgREST API (port 64321)
 - Auth server
-- Supabase Studio (port 54323)
-- Email testing (port 54324)
+- Supabase Studio (port 64323)
+- Email testing (port 64324)
 
 ### 3. Get Your Credentials
 
 After `supabase start`, you'll see:
 
 ```
-API URL: http://127.0.0.1:54321
+API URL: http://127.0.0.1:64321
 anon key: eyJh...
 service_role key: eyJh...
 ```
@@ -51,20 +51,20 @@ Copy the keys to your `.env` files:
 
 **packages/api/.env:**
 ```env
-SUPABASE_URL=http://127.0.0.1:54321
+SUPABASE_URL=http://127.0.0.1:64321
 SUPABASE_ANON_KEY=<your-anon-key>
 SUPABASE_SERVICE_KEY=<your-service-role-key>
 ```
 
 **packages/web/.env.local:**
 ```env
-NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54321
+NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:64321
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<your-anon-key>
 ```
 
 ### 5. View Database in Supabase Studio
 
-Open http://127.0.0.1:54323 in your browser to see:
+Open http://127.0.0.1:64323 in your browser to see:
 - Tables & data
 - Run SQL queries
 - Manage auth users
@@ -189,7 +189,7 @@ npm run types
 supabase logs --db
 
 # Open Studio
-open http://127.0.0.1:54323
+open http://127.0.0.1:64323
 ```
 
 ## Documentation

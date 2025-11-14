@@ -59,21 +59,21 @@ npm run supabase:start
 ```
 
 This starts Docker containers for:
-- PostgreSQL (port 54322)
-- PostgREST API (port 54321)
-- Auth server (port 54321)
-- Studio UI (port 54323)
-- Inbucket email (port 54324)
+- PostgreSQL (port 64322)
+- PostgREST API (port 64321)
+- Auth server (port 64321)
+- Studio UI (port 64323)
+- Inbucket email (port 64324)
 
 ### 4. Get Credentials
 
 After starting, you'll see:
 
 ```
-API URL: http://127.0.0.1:54321
-GraphQL URL: http://127.0.0.1:54321/graphql/v1
-DB URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
-Studio URL: http://127.0.0.1:54323
+API URL: http://127.0.0.1:64321
+GraphQL URL: http://127.0.0.1:64321/graphql/v1
+DB URL: postgresql://postgres:postgres@127.0.0.1:64322/postgres
+Studio URL: http://127.0.0.1:64323
 anon key: eyJh...
 service_role key: eyJh...
 ```
@@ -83,7 +83,7 @@ service_role key: eyJh...
 **packages/api/.env:**
 ```env
 # Supabase (Local Development)
-SUPABASE_URL=http://127.0.0.1:54321
+SUPABASE_URL=http://127.0.0.1:64321
 SUPABASE_ANON_KEY=eyJh... (from supabase start output)
 SUPABASE_SERVICE_KEY=eyJh... (from supabase start output)
 
@@ -94,7 +94,7 @@ SUPABASE_SERVICE_KEY=eyJh... (from supabase start output)
 
 **packages/web/.env.local:**
 ```env
-NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54321
+NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:64321
 NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJh...
 ```
 
@@ -120,7 +120,7 @@ This generates `packages/shared/src/types/database.types.ts` from your schema.
 
 Open Supabase Studio:
 ```
-http://127.0.0.1:54323
+http://127.0.0.1:64323
 ```
 
 ## Using Supabase in Code

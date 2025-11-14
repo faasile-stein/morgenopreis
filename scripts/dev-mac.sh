@@ -217,8 +217,8 @@ fi
 # Check MailHog
 if docker-compose ps | grep -q "mailhog.*Up"; then
     print_success "MailHog is running"
-    print_success "  • SMTP: localhost:1025"
-    print_success "  • Web UI: http://localhost:8025"
+    print_success "  • SMTP: localhost:6125"
+    print_success "  • Web UI: http://localhost:6025"
 else
     print_error "MailHog failed to start"
     exit 1
@@ -299,7 +299,7 @@ print_header "Starting API Server"
 
 cd packages/api
 
-print_status "Starting Express API on port 3001..."
+print_status "Starting Express API on port 6001..."
 npm run dev &
 API_PID=$!
 
@@ -308,8 +308,8 @@ cd ../..
 # Wait for API to be ready
 print_status "Waiting for API to be ready..."
 for i in {1..30}; do
-    if curl -s http://localhost:3001/health > /dev/null; then
-        print_success "API server is running on http://localhost:3001"
+    if curl -s http://localhost:6001/health > /dev/null; then
+        print_success "API server is running on http://localhost:6001"
         break
     fi
     if [ $i -eq 30 ]; then
@@ -332,15 +332,15 @@ if [ "$HAS_PHP" = true ] && [ "$HAS_COMPOSER" = true ]; then
     if [ ! -f "artisan" ]; then
         print_status "Laravel not installed yet. See LARAVEL-QUICKSTART.md for setup"
     else
-        print_status "Starting Laravel on port 8000..."
-        php artisan serve --port=8000 &
+        print_status "Starting Laravel on port 6800..."
+        php artisan serve --port=6800 &
         LARAVEL_PID=$!
 
         # Wait for Laravel to be ready
         sleep 3
 
-        if curl -s http://localhost:8000 > /dev/null; then
-            print_success "Laravel server is running on http://localhost:8000"
+        if curl -s http://localhost:6800 > /dev/null; then
+            print_success "Laravel server is running on http://localhost:6800"
         else
             print_warning "Laravel may not have started correctly"
         fi
@@ -360,27 +360,27 @@ print_header "🚀 Development Environment Ready!"
 echo ""
 echo -e "${GREEN}Services Running:${NC}"
 echo ""
-echo -e "  ${BLUE}API Server:${NC}          http://localhost:3001"
-echo -e "  ${BLUE}API Health:${NC}          http://localhost:3001/health"
+echo -e "  ${BLUE}API Server:${NC}          http://localhost:6001"
+echo -e "  ${BLUE}API Health:${NC}          http://localhost:6001/health"
 echo ""
-echo -e "  ${BLUE}Supabase Studio:${NC}     http://localhost:54323"
-echo -e "  ${BLUE}Supabase API:${NC}        http://localhost:54321"
+echo -e "  ${BLUE}Supabase Studio:${NC}     http://localhost:64323"
+echo -e "  ${BLUE}Supabase API:${NC}        http://localhost:64321"
 echo ""
 echo -e "  ${BLUE}Redis:${NC}               localhost:6379"
 echo ""
-echo -e "  ${BLUE}MailHog SMTP:${NC}        localhost:1025"
-echo -e "  ${BLUE}MailHog Web:${NC}         http://localhost:8025"
+echo -e "  ${BLUE}MailHog SMTP:${NC}        localhost:6125"
+echo -e "  ${BLUE}MailHog Web:${NC}         http://localhost:6025"
 echo ""
 
 if [ "$HAS_PHP" = true ] && [ -f "packages/laravel/artisan" ]; then
-    echo -e "  ${BLUE}Laravel Website:${NC}     http://localhost:8000"
+    echo -e "  ${BLUE}Laravel Website:${NC}     http://localhost:6800"
     echo ""
 fi
 
 echo -e "${YELLOW}Quick Links:${NC}"
 echo ""
-echo -e "  • Test wheel spin:        ${BLUE}POST http://localhost:3001/api/wheel/spin${NC}"
-echo -e "  • View destinations:      ${BLUE}http://localhost:8000/destinations${NC}"
+echo -e "  • Test wheel spin:        ${BLUE}POST http://localhost:6001/api/wheel/spin${NC}"
+echo -e "  • View destinations:      ${BLUE}http://localhost:6800/destinations${NC}"
 echo -e "  • API documentation:      ${BLUE}See docs/api/${NC}"
 echo ""
 echo -e "${YELLOW}Useful Commands:${NC}"

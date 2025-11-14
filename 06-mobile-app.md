@@ -87,7 +87,7 @@ packages/mobile/
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
-const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3001';
+const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:6001';
 
 export const apiClient = axios.create({
   baseURL: `${API_URL}/api`,

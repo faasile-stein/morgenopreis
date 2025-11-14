@@ -50,7 +50,7 @@ Edit `.env` with your Supabase credentials:
 ```env
 DB_CONNECTION=pgsql
 DB_HOST=127.0.0.1
-DB_PORT=54322
+DB_PORT=64322
 DB_DATABASE=postgres
 DB_USERNAME=postgres
 DB_PASSWORD=postgres
@@ -164,10 +164,10 @@ npm run dev
 
 ### 2. Access Points
 
-- **Laravel Frontend**: http://localhost:8000
-- **Filament Admin**: http://localhost:8000/admin
-- **Express API**: http://localhost:3001
-- **Supabase Studio**: http://localhost:54323
+- **Laravel Frontend**: http://localhost:6800
+- **Filament Admin**: http://localhost:6800/admin
+- **Express API**: http://localhost:6001
+- **Supabase Studio**: http://localhost:64323
 
 ### 3. Create Admin User
 

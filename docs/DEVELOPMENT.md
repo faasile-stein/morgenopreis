@@ -155,14 +155,14 @@ git commit -m "docs(api): update API documentation"
 cd packages/api
 npm run dev
 ```
-Access at: http://localhost:3001
+Access at: http://localhost:6001
 
 ### Web App
 ```bash
 cd packages/web
 npm run dev
 ```
-Access at: http://localhost:3000
+Access at: http://localhost:6000
 
 ### Mobile App
 ```bash
@@ -211,13 +211,13 @@ redis-cli -h localhost -p 6379
 
 ### MailHog (Email Testing)
 - **SMTP Port:** 1025
-- **Web UI:** http://localhost:8025
+- **Web UI:** http://localhost:6025
 
 All emails sent in development are caught by MailHog.
 
 ### Laravel
 - **Port:** 8000
-- **URL:** http://localhost:8000
+- **URL:** http://localhost:6800
 - Start with: `cd packages/laravel && php artisan serve`
 
 ## Environment Variables

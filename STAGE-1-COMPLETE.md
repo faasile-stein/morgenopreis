@@ -204,15 +204,15 @@ npm run dev
 ### 6. Test API
 ```bash
 # Health check
-curl http://localhost:3001/health
+curl http://localhost:6001/health
 
 # Register user
-curl -X POST http://localhost:3001/api/auth/register \
+curl -X POST http://localhost:6001/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{"email":"test@example.com","password":"password123","firstName":"Test"}'
 
 # Get nearest airports
-curl http://localhost:3001/api/airports/nearest
+curl http://localhost:6001/api/airports/nearest
 ```
 
 ## Testing
@@ -231,8 +231,8 @@ npm run type-check
 
 - **PostgreSQL** - localhost:5432 (Database)
 - **Redis** - localhost:6379 (Caching)
-- **MailHog** - localhost:8025 (Email testing)
-- **Drupal** - localhost:8080 (CMS - requires composer install)
+- **MailHog** - localhost:6025 (Email testing)
+- **Drupal** - localhost:6080 (CMS - requires composer install)
 
 ## Success Criteria ✅
 

@@ -30,11 +30,11 @@ npm run dev:mac
 **What you'll get:**
 ```
 Services Running:
-  API Server:          http://localhost:3001
-  Supabase Studio:     http://localhost:54323
+  API Server:          http://localhost:6001
+  Supabase Studio:     http://localhost:64323
   Redis:               localhost:6379
-  MailHog Web:         http://localhost:8025
-  Laravel Website:     http://localhost:8000
+  MailHog Web:         http://localhost:6025
+  Laravel Website:     http://localhost:6800
 ```
 
 ---
@@ -200,7 +200,7 @@ npm run dev:stop
 
 # Check what's using ports
 lsof -ti:3001  # API
-lsof -ti:54321 # Supabase
+lsof -ti:64321 # Supabase
 lsof -ti:8000  # Laravel
 
 # Clean Docker

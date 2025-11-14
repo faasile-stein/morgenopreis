@@ -18,7 +18,7 @@ docker-compose build drupal
 docker-compose up drupal
 ```
 
-3. Access Drupal at http://localhost:8080
+3. Access Drupal at http://localhost:6080
 
 ## Planned Content Types
 
