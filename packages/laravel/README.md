@@ -67,8 +67,8 @@ php artisan serve
 ```
 
 Visit:
-- **Frontend**: http://localhost:8000
-- **Admin Panel**: http://localhost:8000/admin
+- **Frontend**: http://localhost:6800
+- **Admin Panel**: http://localhost:6800/admin
 
 ## Architecture
 

@@ -4,7 +4,7 @@
   "private": true,
   "description": "TravelTomorrow Next.js web application",
   "scripts": {
-    "dev": "next dev -p 3000",
+    "dev": "next dev -p 6000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

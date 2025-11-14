@@ -339,7 +339,7 @@ import axios from 'axios';
 import { prisma } from '../config/database';
 import { logger } from '@traveltomorrow/shared/logger';
 
-const DRUPAL_BASE_URL = process.env.DRUPAL_URL || 'http://localhost:8080';
+const DRUPAL_BASE_URL = process.env.DRUPAL_URL || 'http://localhost:6080';
 const DRUPAL_API_USER = process.env.DRUPAL_API_USER;
 const DRUPAL_API_PASS = process.env.DRUPAL_API_PASS;
 
@@ -802,7 +802,7 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 
 describe('Destination Page SEO', () => {
-  const BASE_URL = process.env.DRUPAL_URL || 'http://localhost:8080';
+  const BASE_URL = process.env.DRUPAL_URL || 'http://localhost:6080';
 
   it('should have proper JSON-LD schema', async () => {
     const response = await axios.get(`${BASE_URL}/destinations/barcelona`);

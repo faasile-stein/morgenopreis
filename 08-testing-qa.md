@@ -406,7 +406,7 @@ import { test, expect } from '@playwright/test';
 test.describe('Wheel to Booking Flow', () => {
   test('should complete wheel spin and booking', async ({ page }) => {
     // Navigate to home
-    await page.goto('http://localhost:3000');
+    await page.goto('http://localhost:6000');
 
     // Wait for wheel to load
     await expect(page.locator('text=Where will you go?')).toBeVisible();
@@ -457,7 +457,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL: 'http://localhost:6000',
     trace: 'on-first-retry',
   },
 
@@ -486,7 +486,7 @@ export default defineConfig({
 
   webServer: {
     command: 'npm run dev',
-    url: 'http://localhost:3000',
+    url: 'http://localhost:6000',
     reuseExistingServer: !process.env.CI,
   },
 });
@@ -502,7 +502,7 @@ import autocannon from 'autocannon';
 
 async function runLoadTest() {
   const result = await autocannon({
-    url: 'http://localhost:3001',
+    url: 'http://localhost:6001',
     connections: 100,
     duration: 30,
     pipelining: 1,
@@ -557,7 +557,7 @@ import { injectAxe, checkA11y } from 'axe-playwright';
 
 test.describe('Accessibility', () => {
   test('home page should be accessible', async ({ page }) => {
-    await page.goto('http://localhost:3000');
+    await page.goto('http://localhost:6000');
     await injectAxe(page);
 
     const violations = await checkA11y(page, null, {
@@ -569,7 +569,7 @@ test.describe('Accessibility', () => {
   });
 
   test('destination page should be accessible', async ({ page }) => {
-    await page.goto('http://localhost:3000/destinations/barcelona');
+    await page.goto('http://localhost:6000/destinations/barcelona');
     await injectAxe(page);
 
     const violations = await checkA11y(page);
@@ -729,7 +729,7 @@ jobs:
       - name: Run Lighthouse
         uses: treosh/lighthouse-ci-action@v10
         with:
-          urls: http://localhost:3000
+          urls: http://localhost:6000
           uploadArtifacts: true
           budgetPath: ./packages/web/lighthouse-budget.json
 ```

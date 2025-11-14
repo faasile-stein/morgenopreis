@@ -95,7 +95,7 @@ cp packages/laravel/.env.example packages/laravel/.env
 Edit `packages/api/.env`:
 ```env
 # You'll get these after starting Supabase
-SUPABASE_URL=http://127.0.0.1:54321
+SUPABASE_URL=http://127.0.0.1:64321
 SUPABASE_ANON_KEY=your-anon-key
 SUPABASE_SERVICE_KEY=your-service-key
 
@@ -151,7 +151,7 @@ cd packages/api
 npm run dev
 ```
 
-API will be available at: http://localhost:3001
+API will be available at: http://localhost:6001
 
 ### 7. Start Laravel (Optional)
 
@@ -168,7 +168,7 @@ composer create-project laravel/laravel . "11.*"
 php artisan serve
 ```
 
-Laravel will be available at: http://localhost:8000
+Laravel will be available at: http://localhost:6800
 
 ## Using npm Scripts
 
@@ -193,7 +193,7 @@ npm run
 ### 1. Test API Health
 
 ```bash
-curl http://localhost:3001/health
+curl http://localhost:6001/health
 ```
 
 Expected response:
@@ -207,7 +207,7 @@ Expected response:
 ### 2. Test Supabase Connection
 
 ```bash
-curl http://localhost:3001/api/airports
+curl http://localhost:6001/api/airports
 ```
 
 Should return list of airports.
@@ -215,7 +215,7 @@ Should return list of airports.
 ### 3. Test Wheel Spin
 
 ```bash
-curl -X POST http://localhost:3001/api/wheel/spin \
+curl -X POST http://localhost:6001/api/wheel/spin \
   -H "Content-Type: application/json" \
   -d '{
     "lat": 50.8503,
@@ -225,15 +225,15 @@ curl -X POST http://localhost:3001/api/wheel/spin \
 
 ### 4. View MailHog
 
-Open http://localhost:8025 in your browser to see captured emails.
+Open http://localhost:6025 in your browser to see captured emails.
 
 ### 5. View Supabase Studio
 
-Open http://localhost:54323 to manage your database.
+Open http://localhost:64323 to manage your database.
 
 ### 6. Test Laravel (if installed)
 
-Open http://localhost:8000 in your browser.
+Open http://localhost:6800 in your browser.
 
 ## Common Issues & Solutions
 
@@ -359,7 +359,7 @@ npx supabase status
 
 ```bash
 # View Supabase Studio
-open http://localhost:54323
+open http://localhost:64323
 
 # Reset database (fresh start)
 cd packages/database

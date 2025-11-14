@@ -66,13 +66,13 @@ Edit `.env`:
 ```env
 DB_CONNECTION=pgsql
 DB_HOST=127.0.0.1
-DB_PORT=54322  # Supabase local port
+DB_PORT=64322  # Supabase local port
 DB_DATABASE=postgres
 DB_USERNAME=postgres
 DB_PASSWORD=postgres
 
-APP_URL=http://localhost:8000
-API_URL=http://localhost:3001
+APP_URL=http://localhost:6800
+API_URL=http://localhost:6001
 ```
 
 ### 4. Install Dependencies
@@ -89,26 +89,26 @@ npm run build
 php artisan serve
 ```
 
-Visit: http://localhost:8000
+Visit: http://localhost:6800
 
 ## Usage
 
 ### Viewing Destinations
 
-Navigate to http://localhost:8000/destinations/barcelona (or any destination slug from your database)
+Navigate to http://localhost:6800/destinations/barcelona (or any destination slug from your database)
 
 ### Checking SEO
 
 1. **View Page Source** - See JSON-LD structured data
 2. **Test in Google Rich Results** - https://search.google.com/test/rich-results
-3. **Check Sitemap** - http://localhost:8000/sitemap.xml
+3. **Check Sitemap** - http://localhost:6800/sitemap.xml
 
 ### Adding New Destinations (via API)
 
 Use the Admin API to add destinations:
 
 ```bash
-curl -X POST http://localhost:3001/api/admin/destinations \
+curl -X POST http://localhost:6001/api/admin/destinations \
   -H "Authorization: Bearer YOUR_ADMIN_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{

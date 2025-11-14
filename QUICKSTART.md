@@ -39,39 +39,39 @@ After running the script:
 ```
 ✅ Services Running:
 
-  API Server:          http://localhost:3001
-  API Health:          http://localhost:3001/health
+  API Server:          http://localhost:6001
+  API Health:          http://localhost:6001/health
 
-  Supabase Studio:     http://localhost:54323
-  Supabase API:        http://localhost:54321
+  Supabase Studio:     http://localhost:64323
+  Supabase API:        http://localhost:64321
 
   Redis:               localhost:6379
 
-  MailHog SMTP:        localhost:1025
-  MailHog Web:         http://localhost:8025
+  MailHog SMTP:        localhost:6125
+  MailHog Web:         http://localhost:6025
 
-  Laravel Website:     http://localhost:8000
+  Laravel Website:     http://localhost:6800
 ```
 
 ## Quick Test
 
 ### 1. Check API
 ```bash
-curl http://localhost:3001/health
+curl http://localhost:6001/health
 ```
 
 ### 2. Spin the Wheel
 ```bash
-curl -X POST http://localhost:3001/api/wheel/spin \
+curl -X POST http://localhost:6001/api/wheel/spin \
   -H "Content-Type: application/json" \
   -d '{"lat": 50.8503, "lng": 4.3517}'
 ```
 
 ### 3. View Emails
-Open http://localhost:8025 in your browser
+Open http://localhost:6025 in your browser
 
 ### 4. Manage Database
-Open http://localhost:54323 in your browser
+Open http://localhost:64323 in your browser
 
 ## Get Duffel API Key
 
@@ -214,7 +214,7 @@ npm test
 
 ### Test Wheel Spin
 ```bash
-curl -X POST http://localhost:3001/api/wheel/spin \
+curl -X POST http://localhost:6001/api/wheel/spin \
   -H "Content-Type: application/json" \
   -d '{
     "lat": 50.8503,
@@ -226,7 +226,7 @@ curl -X POST http://localhost:3001/api/wheel/spin \
 ### Test Authentication
 ```bash
 # Register
-curl -X POST http://localhost:3001/api/auth/register \
+curl -X POST http://localhost:6001/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{
     "email": "test@example.com",
@@ -236,7 +236,7 @@ curl -X POST http://localhost:3001/api/auth/register \
   }'
 
 # Login
-curl -X POST http://localhost:3001/api/auth/login \
+curl -X POST http://localhost:6001/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{
     "email": "test@example.com",
@@ -249,7 +249,7 @@ curl -X POST http://localhost:3001/api/auth/login \
 ### View Data
 ```bash
 # Open Supabase Studio
-open http://localhost:54323
+open http://localhost:64323
 ```
 
 ### Reset Database
@@ -293,7 +293,7 @@ npx supabase db push
 **API (`.env`):**
 ```env
 # Supabase (auto-configured by script)
-SUPABASE_URL=http://127.0.0.1:54321
+SUPABASE_URL=http://127.0.0.1:64321
 SUPABASE_ANON_KEY=...
 SUPABASE_SERVICE_KEY=...
 
@@ -308,9 +308,9 @@ BOOKING_AFFILIATE_ID=your_id
 ```env
 DB_CONNECTION=pgsql
 DB_HOST=127.0.0.1
-DB_PORT=54322
+DB_PORT=64322
 DB_DATABASE=postgres
-APP_URL=http://localhost:8000
+APP_URL=http://localhost:6800
 ```
 
 ## Key Features
@@ -341,10 +341,10 @@ APP_URL=http://localhost:8000
 │  Stop All:        npm run dev:stop                 │
 │  Quick Start:     npm run dev:quick                │
 │                                                     │
-│  API:             http://localhost:3001            │
-│  Supabase:        http://localhost:54323           │
-│  MailHog:         http://localhost:8025            │
-│  Laravel:         http://localhost:8000            │
+│  API:             http://localhost:6001            │
+│  Supabase:        http://localhost:64323           │
+│  MailHog:         http://localhost:6025            │
+│  Laravel:         http://localhost:6800            │
 │                                                     │
 │  Logs:            docker-compose logs -f           │
 │  Reset DB:        cd packages/database &&          │
