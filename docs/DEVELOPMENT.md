@@ -240,6 +240,31 @@ Key variables:
 
 ## Troubleshooting
 
+### Docker Permission Issues
+
+If you get "permission denied" errors when trying to connect to Docker daemon:
+
+**On Linux:**
+```bash
+# Add your user to the docker group
+sudo usermod -aG docker $USER
+
+# Apply the group change (choose one):
+# Option 1: Use newgrp (doesn't require logout)
+newgrp docker
+
+# Option 2: Log out and log back in for changes to take effect
+```
+
+After fixing permissions, run the setup script again:
+```bash
+npm run setup
+```
+
+**On macOS/Windows:**
+- Ensure Docker Desktop is running
+- Check that Docker Desktop has the necessary permissions in System Preferences/Settings
+
 ### Port Already in Use
 If you get "port already in use" errors:
 ```bash

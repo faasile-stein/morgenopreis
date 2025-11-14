@@ -25,6 +25,25 @@ fi
 
 echo "✅ Docker found: $(docker --version)"
 
+# Check Docker daemon access
+if ! docker ps &> /dev/null; then
+    echo ""
+    echo "❌ Cannot connect to Docker daemon. This is usually a permissions issue."
+    echo ""
+    echo "To fix this, run the following commands:"
+    echo "  sudo usermod -aG docker $USER"
+    echo "  newgrp docker"
+    echo ""
+    echo "Alternatively, you can:"
+    echo "  1. Log out and log back in for group changes to take effect"
+    echo "  2. Or run this script with sudo (not recommended)"
+    echo ""
+    echo "After fixing permissions, run this script again."
+    exit 1
+fi
+
+echo "✅ Docker daemon accessible"
+
 # Install dependencies
 echo "📦 Installing dependencies..."
 npm install
